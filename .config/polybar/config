@@ -167,7 +167,7 @@ ramp-signal-foreground = ${colors.foreground}
 type = internal/pulseaudio
  
 format-volume = <ramp-volume> <label-volume>
-format-volume-foreground = ${colors.foreground}
+format-volume-foreground = ${colors.gray}
 label-volume = %percentage%%
 label-volume-foreground = ${colors.foreground}
 ramp-volume-0 = 
@@ -309,8 +309,8 @@ animation-charging-framerate = 750
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-base-temperature = 20
-warn-temperature = 60
+base-temperature = 45
+;warn-temperature = 65
 
 format = <ramp> <label>
 format-foreground = ${colors.blue}
@@ -321,9 +321,9 @@ label = %temperature-c%
 label-foregorund = ${colors.foreground}
 label-warn = %temperature-c%
 
-ramp-2 = 
-ramp-1 = 
-ramp-0 = 
+ramp-0 = %{F#03AEFF}%{F-}
+ramp-1 = %{F#DAE84D}%{F-}
+ramp-2 = %{F#B53B50}%{F-}
 
 [module/powermenu]
 type = custom/menu
@@ -375,7 +375,7 @@ menu-4-1-exec = loginctl poweroff
 [module/xkeyboard]
 type = internal/xkeyboard
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground}
+format-prefix-foreground = ${colors.gray}
 
 label-layout = %layout%
 
@@ -387,7 +387,7 @@ label-indicator-background = ${colors.background}
 type = custom/script
 exec = ~/.config/scripts/popup-calendar.sh
 interval = 5
-click-left = ~/.config/scripts/popup-calendar.sh --popup &
+click-left = ~/.config/scripts/popup-calendar.sh popup &
 
 [module/mic]
 type = custom/script
