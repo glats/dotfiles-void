@@ -54,7 +54,7 @@ foreground = ${colors.foreground}
 line-size = 1
 line-color = #f00
 
-border-top-size = 5
+border-top-size = 0
 border-left-size = 10
 border-right-size = 10
 border-color = #00000000
@@ -88,6 +88,55 @@ scroll-down = i3wm-wsprev
 ;override-redirect = true 
 
 cursor-click = pointer
+[module/ewmh]
+type = internal/xworkspaces
+pin-workspaces = false
+enable-click = true
+enable-scroll = true
+
+format = <label-state>
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-active = %name%
+label-active-padding = 1
+label-active-background = ${colors.background}
+
+; (unreleased)
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %name%
+label-occupied-padding = 1
+label-occupied-underline = #555555
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-urgent = %name%!
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.background}
+label-urgent-background = ${colors.foreground}
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = %name%
+label-empty-padding = 1
+label-empty-foreground = ${colors.foreground-alt}
 
 [module/xwindow]
 type = internal/xwindow
