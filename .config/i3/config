@@ -108,6 +108,18 @@ bindsym $mod+Shift+Down resize grow height 5 px or 5 ppt
 bindsym $mod+Shift+Up resize shrink height 5 px or 5 ppt
 bindsym $mod+Shift+Right resize grow width 5 px or 5 ppt
 
+# move focused window
+bindsym $mod+Control+h move left
+bindsym $mod+Control+j move down
+bindsym $mod+Control+k move up
+bindsym $mod+Control+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Control+Left move left
+bindsym $mod+Control+Down move down
+bindsym $mod+Control+Up move up
+bindsym $mod+Control+Right move right
+
 # split in horizontal orientation
 #bindsym $mod+h split h
 

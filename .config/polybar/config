@@ -116,45 +116,21 @@ enable-click = true
 enable-scroll = true
 
 format = <label-state>
-; Available tokens:
-;   %name%
-; Default: %name%
 label-monitor = %name%
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-active = %name%
 label-active-padding = 1
 label-active-background = ${colors.background}
 
-; (unreleased)
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-occupied = %name%
 label-occupied-padding = 1
 label-occupied-underline = #555555
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-urgent = %name%!
 label-urgent-padding = 1
 label-urgent-foreground = ${colors.background}
 label-urgent-background = ${colors.foreground}
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
 label-empty = %name%
 label-empty-padding = 1
 label-empty-foreground = ${colors.foreground-alt}
@@ -378,14 +354,24 @@ menu-4-1-exec = loginctl poweroff
 
 [module/xkeyboard]
 type = internal/xkeyboard
-format-prefix = " "
-format-prefix-foreground = ${colors.gray}
+format = <label-layout> <label-indicator>
+format-spacing = 0
+;format-prefix = " "
 
-label-layout = %layout%
+label-layout = %icon% %layout%
+layout-icon-default = 
+;label-layout-foreground = ${colors.gray}
 
 label-indicator-padding = 1
 label-indicator-margin = 1
 label-indicator-background = ${colors.background}
+
+label-indicator-on-capslock =  a
+label-indicator-off-capslock =
+label-indicator-on-numlock =  1
+label-indicator-off-numlock =
+label-indicator-on-scrolllock = 
+label-indicator-off-scrolllock = 
 
 [module/calendar]
 type = custom/script
