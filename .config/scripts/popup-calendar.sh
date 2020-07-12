@@ -4,7 +4,7 @@ BAR_HEIGHT=70  # polybar height
 BORDER_SIZE=0  # border size from your wm settings
 YAD_WIDTH=222
 YAD_HEIGHT=188
-DATE=" $(date +"%Y-%m-%d")   $(date +"%H:%M")"
+DATE=" $(date +"%Y-%m-%d")  $(date +"%H:%M")"
 
 case "$1" in
 popup)
