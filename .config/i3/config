@@ -26,8 +26,10 @@ font pango:monospace 8
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
-
-## Base16 Bright
+workspace_layout tabbed
+title_align center
+## Base16 Pop
+# Author: Chris Kempson (http://chriskempson.com)
 #
 # You can use these variables anywhere in the i3 configuration file.
 set_from_resource $base00 i3wm.color0 #000000
@@ -58,13 +60,19 @@ client.background       $base07
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+#for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
 for_window [class=".*"] split toggle
 for_window [class=".*"] border pixel 1
 for_window [class="Yad" title="yad-calendar"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
 for_window [instance="notepadqq-bin" title="Search"] floating enable
 for_window [instance="jetbrains-pycharm" title="Confirm Exit"] floating enable
-for_window [class="Blueman-manager" instance="blueman-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+#for_window [class="Connman-gtk"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="Nitrogen"] floating enable
 # start a terminal
 bindsym $mod+Shift+Return exec kitty
 
@@ -80,10 +88,10 @@ bindsym $mod+p exec --no-startup-id rofi -modi drun -show drun
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -195,7 +203,7 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+Shift+t exec caja
-bindsym Control+Shift+p exec i3lock-fancy -b=0x3 -n
+bindsym Control+Shift+l exec i3lock-fancy -b=0x3 -n
 bindsym Print exec mate-screenshot
 bindsym Shift+Print exec mate-screenshot -a
 bindsym Control+Print exec mate-screenshot -w
@@ -212,6 +220,7 @@ exec --no-startup-id setxkbmap -synch
 #        Option "XkbLayout"  "latam,es"
 #        Option "XkbModel"   "pc105"
 #EndSection
+exec --no-startup-id $HOME/.config/scripts/player.py
 exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config $HOME/.config/picom/picom.conf
 exec --no-startup-id dunst
 exec --no-startup-id libinput-gestures-setup start

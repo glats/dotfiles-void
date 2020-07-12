@@ -75,7 +75,7 @@ font-4 = Noto Color Emoji:style=Regular:size=9:scale=10
 
 modules-left = i3
 modules-center =
-modules-right = backlight pulseaudio mic batteryone batterytwo temperature xkeyboard calendar powermenu
+modules-right = previous playpause next backlight pulseaudio mic batteryone batterytwo temperature xkeyboard calendar powermenu
 bottom = true
 
 tray-position = right
@@ -88,6 +88,27 @@ scroll-down = i3wm-wsprev
 ;override-redirect = true 
 
 cursor-click = pointer
+[module/previous]
+type = custom/script
+interval = 86400
+format = "%{T3}<label>"
+exec = echo ""
+click-left = playerctl previous &
+
+[module/next]
+type = custom/script
+interval = 86400
+format = "%{T3}<label>"
+exec = echo ""
+line-size = 1
+click-left = playerctl next &
+
+[module/playpause]
+type = custom/script
+exec = ~/.config/scripts/play.py 2> /dev/null
+tail = true
+click-left = playerctl play-pause &
+
 [module/ewmh]
 type = internal/xworkspaces
 pin-workspaces = false
@@ -147,7 +168,6 @@ label-maxlen = 50
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
-; TODO change in i3 icons
 ;strip-wsnumbers = true
 wrapping-scroll = false
  
@@ -226,56 +246,19 @@ ramp-volume-2 = 
 label-muted = ${env:MUTE_COLOR}
 interval = 5
 
-; [module/batteryone]
-; type = internal/battery
-; battery = BAT1
-; adapter = AC
-; full-at = 99
-
-; format-charging = <animation-charging>  <label-charging>
-; format-charging-foreground = ${colors.warning}
-; format-discharging = <ramp-capacity>  <label-discharging>
-; format-full =  <label-full>
-; format-full-foreground = ${colors.green}
-
-; label-discharging = %percentage%%
-; label-charging = %percentage%%
-; label-full = %percentage%%
-
-; ramp-capacity-0 = 
-; ramp-capacity-1 = 
-; ramp-capacity-2 = 
-; ramp-capacity-3 = 
-; ramp-capacity-4 = 
-
-; animation-charging-0 = 
-; animation-charging-1 = 
-; animation-charging-2 = 
-; animation-charging-3 = 
-; animation-charging-4 = 
-; animation-charging-foreground = ${colors.foreground}
-; animation-charging-framerate = 500
 [module/batteryone]
 #ls -1 /sys/class/power_supply/
 type = internal/battery
 battery = BAT1
 adapter = AC
 full-at = 99
-; format-charging = <animation-charging> <label-charging>
 
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 
-;format-discharging = <animation-discharging> <label-discharging>
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.green}
-
-; ramp-capacity-0 = %{F#B53B50}%{F-}
-; ramp-capacity-1 = %{F#DAE84D}%{F-}
-; ramp-capacity-2 = %{F#DAE84D}%{F-}
-; ramp-capacity-3 = %{F#DAE84D}%{F-}
-; ramp-capacity-4 = %{F#06EA61}%{F-}
 
 ramp-capacity-0 = 
 ramp-capacity-0-foreground = ${colors.alert}
@@ -287,7 +270,6 @@ ramp-capacity-3 = 
 ramp-capacity-3-foreground = ${colors.green}
 ramp-capacity-4 = 
 ramp-capacity-4-foreground = ${colors.green}
-; ramp-capacity-foreground = ${colors.foreground}
 
 animation-charging-0 = 
 animation-charging-1 = 
@@ -297,35 +279,17 @@ animation-charging-4 = 
 animation-charging-foreground = ${colors.warning}
 animation-charging-framerate = 750
 
-
-; animation-discharging-4 = 
-; animation-discharging-3 = 
-; animation-discharging-2 = 
-; animation-discharging-1 = 
-; animation-discharging-0 = 
-; animation-discharging-foreground = ${colors.foreground}
-; animation-discharging-framerate = 500
 [module/batterytwo]
 #ls -1 /sys/class/power_supply/
 type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 96
-; format-charging = <animation-charging> <label-charging>
-
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
-; format-discharging = <animation-discharging> <label-discharging>
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.green}
-
-
-; ramp-capacity-0 = %{F#B53B50}%{F-}
-; ramp-capacity-1 = %{F#DAE84D}%{F-}
-; ramp-capacity-2 = %{F#DAE84D}%{F-}
-; ramp-capacity-3 = %{F#DAE84D}%{F-}
-; ramp-capacity-4 = %{F#06EA61}%{F-}
 
 ramp-capacity-0 = 
 ramp-capacity-0-foreground = ${colors.alert}
@@ -345,15 +309,6 @@ animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-foreground = ${colors.warning}
 animation-charging-framerate = 750
-
-
-; animation-discharging-4 = 
-; animation-discharging-3 = 
-; animation-discharging-2 = 
-; animation-discharging-1 = 
-; animation-discharging-0 = 
-; animation-discharging-foreground = ${colors.foreground}
-; animation-discharging-framerate = 500
 
 [module/temperature]
 type = internal/temperature
