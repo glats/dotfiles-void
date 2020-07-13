@@ -88,6 +88,7 @@ scroll-down = i3wm-wsprev
 ;override-redirect = true 
 
 cursor-click = pointer
+
 [module/previous]
 type = custom/script
 interval = 86400
