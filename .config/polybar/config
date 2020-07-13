@@ -74,8 +74,8 @@ font-3 = Font Awesome 5 Brands:style=Regular:size=9
 font-4 = Noto Color Emoji:style=Regular:size=9:scale=10
 
 modules-left = i3
-modules-center =
-modules-right = previous playpause next backlight pulseaudio mic batteryone batterytwo temperature xkeyboard calendar powermenu
+modules-center = backlight pulseaudio mic previous playpause next xkeyboard temperature batteryone batterytwo
+modules-right = calendar powermenu
 bottom = true
 
 tray-position = right
