@@ -26,7 +26,7 @@ font pango:monospace 8
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
-workspace_layout tabbed
+
 title_align center
 ## Base16 Pop
 # Author: Chris Kempson (http://chriskempson.com)
@@ -60,7 +60,6 @@ client.background       $base07
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-for_window [class=".*"] split toggle
 for_window [class=".*"] border pixel 1
 for_window [class="Yad" title="yad-calendar"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
