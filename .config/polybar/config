@@ -73,7 +73,7 @@ font-2 = Font Awesome 5 Free:style=Solid:size=9
 font-3 = Font Awesome 5 Brands:style=Regular:size=9
 font-4 = Noto Color Emoji:style=Regular:size=9:scale=10
 
-modules-left = i3
+modules-left = ewmh
 modules-center = backlight pulseaudio mic previous playpause next xkeyboard temperature batteryone batterytwo
 modules-right = calendar powermenu
 bottom = true
@@ -81,14 +81,13 @@ bottom = true
 tray-position = right
 tray-padding = 2
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
 ; this two options doenst work well put windows overall in i3
 ;wm-restack = i3
-;override-redirect = true 
-
+override-redirect = true
+fixed-center = true
 cursor-click = pointer
-
 [module/previous]
 type = custom/script
 interval = 86400
@@ -312,7 +311,6 @@ type = custom/menu
 expand-right = true
 
 format-spacing = 1
-
 label-open = 
 label-open-foreground = ${colors.alert}
 label-close =  
@@ -363,8 +361,8 @@ label-layout = %icon% %layout%
 layout-icon-default = 
 ;label-layout-foreground = ${colors.gray}
 
-label-indicator-padding = 1
-label-indicator-margin = 1
+;label-indicator-padding = 1
+;label-indicator-margin = 1
 label-indicator-background = ${colors.background}
 
 label-indicator-on-capslock =  a
