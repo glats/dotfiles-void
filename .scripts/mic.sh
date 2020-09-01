@@ -3,7 +3,7 @@
 [[ -z "${WAYLAND_DISPLAY}" ]] && display='xorg' || display='wayland'
 content_file=/tmp/mic-$display
 function color {
-    $HOME/.config/scripts/colors.sh $1
+    $HOME/.scripts/colors.sh $1
 }
 
 function update_source {
@@ -13,13 +13,13 @@ function update_source {
 
 function volume_up {
     update_source
-    pactl set-source-volume $source +2%
+    pactl set-source-volume $source +5%
     volume_print
 }
 
 function volume_down {
     update_source
-    pactl set-source-volume $source -2%
+    pactl set-source-volume $source -5%
     volume_print
 }
 
@@ -30,7 +30,7 @@ function volume_mute {
 }
 
 function get_volume {
-    pactl list sources | grep -A 10 -w "Source #$source" | grep '^[[:space:]]Volume:' | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+    pactl list sources | grep '^[[:space:]]Volume:' | tail -n 1 | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
 }
 
 function volume_print {
