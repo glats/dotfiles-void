@@ -18,7 +18,17 @@ mem() {
 
 bri(){
 	brightness=`light`
-	printf " %.0f%%" `echo "$brightness"`
+	value=`printf "%.0f" $brightness`
+	if [ $value -gt 70 ]; then
+		display="+@fg=0;+@fg=0;"
+	elif [ $value -eq 0 ]; then
+		display="+@fg=8;+@fg=0;"
+	elif [ $value -lt 30 ]; then
+		display="+@fg=7;+@fg=0;"
+	else
+		display="+@fg=7;+@fg=0;"
+	fi
+	printf "$display %.0f%%" `echo "$brightness"`
 }
 
 cpu() {
@@ -78,7 +88,7 @@ bat() {
 	if [ $status = "Full" ] || [ $status = "Unknown" ]; then
 		printf "+@fg=5; +@fg=0;%s%%" `echo "$current" | bc`
 	fi
-	if [ $status = "Charging" ]; then
+	if [ $status = "Discharging" ]; then
 		if [ $current -eq 100 ]; then
 			icon="+@fg=5;+@fg=0;"
 		elif [ $current -gt 60 ]; then
@@ -93,7 +103,7 @@ bat() {
 		printf "$icon %s%%" `echo "$current" | bc`
 	fi
 
-	if [ $status = "Discharging" ]; then
+	if [ $status = "Charging" ]; then
 		if [ $1 -eq 4 ]; then
 			icon=""
 		elif [ $1 -eq 3 ]; then
