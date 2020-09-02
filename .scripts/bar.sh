@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Strict script
 #set -e causes the shell to exit when an unguarded statement evaluates to a false value (i have to disable because of cap lock function)
@@ -6,46 +6,63 @@ set -u
 #set -x
 
 hdd(){
-	hdd="`df -h | awk 'NR==4{print $3, $5}'`"
+	hdd="`df -h | awk 'NR==5{print $5}'`"
 	echo -e "+@fg=7;+@fg=0; $hdd"
 }
 
 
 mem() {
-	mem="`free | awk '/Mem/ {printf "%d MiB / %d MiB : %d%\n", $3 / 1024.0, $2 / 1024.0,  $3/$2 *100}'`"
-	printf "+@fg=7;+@fg=0; %d%%" `echo "$mem"`
+	mem=`free | awk '/Mem/ {printf "%d%\n",$3/$2 *100}'`
+	printf "+@fg=7;+@fg=0; %s" `echo "$mem"`
 }
 
 bri(){
-	brightness="`ligh`"
-	printf " %s%%" `echo "$brightness"`
+	brightness=`light`
+	printf " %.0f%%" `echo "$brightness"`
 }
 
 cpu() {
 	read cpu a b c previdle rest < /proc/stat
-	prevtotal=$((a+b+c+previdle))
-	sleep 0.5
-	read cpu a b c idle rest < /proc/stat
+  	prevtotal=$((a+b+c+previdle))
+  	sleep 0.5
+  	read cpu a b c idle rest < /proc/stat
 
 	total=$((a+b+c+idle))
-	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
+ 	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
 	printf "+@fg=7;+@fg=0; %s%%" `echo "$cpu"`
 
 }
 
 vol(){
-	# todo save into a file
-	vol="`pacmd list-sinks | awk '/\tvolume:/ { print $5 }'  | tail -n1 | cut -d '%' -f 1`"
-	if [ $vol -gt 70 ]; then
-		icon=""
-	elif [ $vol -eq 0 ]; then
-		icon=""
-	elif [ $vol -lt 30 ]; then
-		icon=""
-	else
-		icon=""
-	fi
-	printf "+@fg=7;$icon+@fg=0; %s%%" `echo "$vol"`
+	vol=`pacmd list-sinks | awk '/\tvolume:/ { print $5 }'  | tail -n1 | cut -d '%' -f 1`
+	muted=`pacmd list-sinks | awk '/muted/ { print $2 }' | head -n1`
+
+    if [ $muted == 'yes' ]
+    then
+		printf "+@fg=7;+@fg=0; muted"
+    else
+		if [ $vol -gt 70 ]; then
+			icon=""
+		elif [ $vol -eq 0 ]; then
+			icon=""
+		elif [ $vol -lt 30 ]; then
+			icon=""
+		else
+			icon=""
+		fi
+		printf "+@fg=7;$icon+@fg=0; %s%%" `echo "$vol"`
+    fi
+}
+
+mic(){
+	source=`pactl list short sources | grep input | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,'`
+	mic=`pactl list sources | grep -A 10 -w "Source #$source" | grep '^[[:space:]]Volume:' | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'`
+	mute=`pactl list sources | grep '^[[:space:]]Mute:' | tail -n 1 | awk '{ print $2 }'`
+    if [ "$mute" = "yes" ]; then
+		printf "+@fg=7;+@fg=0; muted"
+    else
+		printf "+@fg=7;+@fg=0; %s%%" `echo "$mic"`
+    fi
 }
 
 dte() {
@@ -54,14 +71,14 @@ dte() {
 }
 
 bat() {
-	capacity=97
-	current=`/sys/class/power_supply/BAT$2/capacity`
-	status=`/sys/class/power_supply/BAT$2/status`
+	current=`cat /sys/class/power_supply/BAT$2/capacity`
+	status=`cat /sys/class/power_supply/BAT$2/status`
 
-	if [ $status = "Charging" ] && [ $current -eq $capacity ]; then
-		printf "+@fg=5; +@fg=0;%s%%" `echo "$capacity" | bc`
+
+	if [ $status = "Full" ] || [ $status = "Unknown" ]; then
+		printf "+@fg=5; +@fg=0;%s%%" `echo "$current" | bc`
 	fi
-	if [ $status -eq 0 ] && [ $current -ne $capacity ]; then
+	if [ $status = "Charging" ]; then
 		if [ $current -eq 100 ]; then
 			icon="+@fg=5;+@fg=0;"
 		elif [ $current -gt 60 ]; then
@@ -76,7 +93,7 @@ bat() {
 		printf "$icon %s%%" `echo "$current" | bc`
 	fi
 
-	if [ $status = 1 ] && [ $current -ne $capacity ]; then
+	if [ $status = "Discharging" ]; then
 		if [ $1 -eq 4 ]; then
 			icon=""
 		elif [ $1 -eq 3 ]; then
@@ -101,10 +118,10 @@ layout() {
 
 lock() {
 	cap_result=`xset q | grep -q 'Caps Lock: *on'`
-	cap="`[ $? == 0 ] && echo "" || echo ""`"
+	cap="`[ $? == 0 ] && echo " a" || echo ""`"
 	num_result=`xset q | grep -q 'Num Lock: *on'`
-	num="`[ $? == 0 ] && echo "" || echo ""`"
-	echo -e "+@fg=7;$cap+@fg=0; a +@fg=7;$num+@fg=0; 1"
+	num="`[ $? == 0 ] && echo " 1" || echo ""`"
+	echo -e "+@fg=7;$cap+@fg=0;+@fg=7;$num+@fg=0;"
 }
 
 SLEEP_SEC=0.1
@@ -114,7 +131,7 @@ while :; do
 	if [ $I -gt $BAT_ITER ]; then
 		I=0
 	fi
-	echo "`cpu`  `mem`  `hdd`  `vol`  `bri`  `bat $I 1` `bat $I 2` `layout`  `lock`  `dte`"
+	echo "`cpu`  `mem`  `hdd`  `vol`  `mic`  `bri`  `layout`  `bat $I 1`  `bat $I 0` `lock`  `dte`"
 	I=`expr $I + 1`
 	sleep $SLEEP_SEC
 done
