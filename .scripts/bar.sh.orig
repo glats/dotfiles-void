@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+#!/bin/sh
+=======
 #!/bin/bash
+>>>>>>> spectrwm
 
 # Strict script
 #set -e causes the shell to exit when an unguarded statement evaluates to a false value (i have to disable because of cap lock function)
@@ -6,12 +10,25 @@ set -u
 #set -x
 
 hdd(){
+<<<<<<< HEAD
+	hdd="`df -h | awk 'NR==4{print $3, $5}'`"
+=======
 	hdd="`df -h | awk 'NR==5{print $5}'`"
+>>>>>>> spectrwm
 	echo -e "+@fg=7;+@fg=0; $hdd"
 }
 
 
 mem() {
+<<<<<<< HEAD
+	mem="`free | awk '/Mem/ {printf "%d MiB / %d MiB : %d%\n", $3 / 1024.0, $2 / 1024.0,  $3/$2 *100}'`"
+	printf "+@fg=7;+@fg=0; %d%%" `echo "$mem"`
+}
+
+bri(){
+	brightness="`ligh`"
+	printf " %s%%" `echo "$brightness"`
+=======
 	mem=`free | awk '/Mem/ {printf "%d%\n",$3/$2 *100}'`
 	printf "+@fg=7;+@fg=0; %s" `echo "$mem"`
 }
@@ -29,6 +46,7 @@ bri(){
 		display="+@fg=7;+@fg=0;"
 	fi
 	printf "$display %.0f%%" `echo "$brightness"`
+>>>>>>> spectrwm
 }
 
 cpu() {
@@ -44,6 +62,20 @@ cpu() {
 }
 
 vol(){
+<<<<<<< HEAD
+	# todo save into a file
+	vol="`pacmd list-sinks | awk '/\tvolume:/ { print $5 }'  | tail -n1 | cut -d '%' -f 1`"
+	if [ $vol -gt 70 ]; then
+		icon=""
+	elif [ $vol -eq 0 ]; then
+		icon=""
+	elif [ $vol -lt 30 ]; then
+		icon=""
+	else
+		icon=""
+	fi
+	printf "+@fg=7;$icon+@fg=0; %s%%" `echo "$vol"`
+=======
 	vol=`pacmd list-sinks | awk '/\tvolume:/ { print $5 }'  | tail -n1 | cut -d '%' -f 1`
 	muted=`pacmd list-sinks | awk '/muted/ { print $2 }' | head -n1`
 
@@ -73,6 +105,7 @@ mic(){
     else
 		printf "+@fg=7;+@fg=0; %s%%" `echo "$mic"`
     fi
+>>>>>>> spectrwm
 }
 
 dte() {
@@ -81,6 +114,16 @@ dte() {
 }
 
 bat() {
+<<<<<<< HEAD
+	capacity=97
+	current=`/sys/class/power_supply/BAT$2/capacity`
+	status=`/sys/class/power_supply/BAT$2/status`
+
+	if [ $status = "Charging" ] && [ $current -eq $capacity ]; then
+		printf "+@fg=5; +@fg=0;%s%%" `echo "$capacity" | bc`
+	fi
+	if [ $status -eq 0 ] && [ $current -ne $capacity ]; then
+=======
 	current=`cat /sys/class/power_supply/BAT$2/capacity`
 	status=`cat /sys/class/power_supply/BAT$2/status`
 
@@ -103,6 +146,7 @@ bat() {
 		printf "$icon %s%%" `echo "$current" | bc`
 	fi
 	if [ $status = "Discharging" ]; then
+>>>>>>> spectrwm
 		if [ $current -eq 100 ]; then
 			icon="+@fg=5;+@fg=0;"
 		elif [ $current -gt 60 ]; then
@@ -117,7 +161,11 @@ bat() {
 		printf "$icon %s%%" `echo "$current" | bc`
 	fi
 
+<<<<<<< HEAD
+	if [ $status = 1 ] && [ $current -ne $capacity ]; then
+=======
 	if [ $status = "Charging" ]; then
+>>>>>>> spectrwm
 		if [ $1 -eq 4 ]; then
 			icon=""
 		elif [ $1 -eq 3 ]; then
@@ -142,6 +190,14 @@ layout() {
 
 lock() {
 	cap_result=`xset q | grep -q 'Caps Lock: *on'`
+<<<<<<< HEAD
+	cap="`[ $? == 0 ] && echo "" || echo ""`"
+	num_result=`xset q | grep -q 'Num Lock: *on'`
+	num="`[ $? == 0 ] && echo "" || echo ""`"
+	echo -e "+@fg=7;$cap+@fg=0; a +@fg=7;$num+@fg=0; 1"
+}
+
+=======
 	cap="`[ $? == 0 ] && echo " a" || echo ""`"
 	num_result=`xset q | grep -q 'Num Lock: *on'`
 	num="`[ $? == 0 ] && echo " 1" || echo ""`"
@@ -149,6 +205,7 @@ lock() {
 }
 
 
+>>>>>>> spectrwm
 SLEEP_SEC=0.1
 I=0
 BAT_ITER=4
@@ -156,7 +213,11 @@ while :; do
 	if [ $I -gt $BAT_ITER ]; then
 		I=0
 	fi
+<<<<<<< HEAD
+	echo "`cpu`  `mem`  `hdd`  `vol`  `bri`  `bat $I 1` `bat $I 2` `layout`  `lock`  `dte`"
+=======
 	echo "`cpu`  `mem`  `hdd`  `vol`  `mic`  `bri`  `layout`  `bat $I 1`  `bat $I 0` `lock`  `dte`"
+>>>>>>> spectrwm
 	I=`expr $I + 1`
 	sleep $SLEEP_SEC
 done
