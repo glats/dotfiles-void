@@ -85,8 +85,22 @@ bat() {
 	status=`cat /sys/class/power_supply/BAT$2/status`
 
 
-	if [ $status = "Full" ] || [ $status = "Unknown" ]; then
-		printf "+@fg=5; +@fg=0;%s%%" `echo "$current" | bc`
+	if [ $status = "Full" ]; then
+		printf "+@fg=5; +@fg=0;100%"
+	fi
+	if [ $status = "Unknown" ]; then
+		if [ $current -eq 100 ]; then
+			icon="+@fg=5;+@fg=0;"
+		elif [ $current -gt 60 ]; then
+			icon="+@fg=5;+@fg=0;"
+		elif [ $current -gt 50 ]; then
+			icon="+@fg=4;+@fg=0;"
+		elif [ $current -gt 25 ]; then
+			icon="+@fg=4;+@fg=0;"
+		else
+			icon="+@fg=6;+@fg=0;"
+		fi
+		printf "$icon %s%%" `echo "$current" | bc`
 	fi
 	if [ $status = "Discharging" ]; then
 		if [ $current -eq 100 ]; then
@@ -133,6 +147,7 @@ lock() {
 	num="`[ $? == 0 ] && echo " 1" || echo ""`"
 	echo -e "+@fg=7;$cap+@fg=0;+@fg=7;$num+@fg=0;"
 }
+
 
 SLEEP_SEC=0.1
 I=0
