@@ -17,10 +17,14 @@ atk
 atkmm
 atril
 attr
+avahi-glib-libs
+avahi-libs
 base-files
 base-system
 bash
 bc
+binutils
+binutils-doc
 blueman
 bluez
 brotli
@@ -51,8 +55,10 @@ dbus-libs
 dbus-x11
 dconf
 dconf-editor
+dejavu-fonts-ttf
 desktop-file-utils
 device-mapper
+dhcpcd
 diffutils
 dmenu
 dmraid
@@ -60,6 +66,7 @@ dnssec-anchors
 dosfstools
 double-conversion
 dracut
+dracut-uefi
 e2fsprogs
 e2fsprogs-libs
 efibootmgr
@@ -136,8 +143,6 @@ graphene
 graphite
 grep
 groff
-grub
-grub-x86_64-efi
 gsettings-desktop-schemas
 gsfonts
 gspell
@@ -150,6 +155,7 @@ gtk-update-icon-cache
 gtkmm
 gtkmm2
 gtksourceview
+gummiboot
 gvfs
 gzip
 hicolor-icon-theme
@@ -418,10 +424,15 @@ libyaml
 libzstd
 light
 linux
+linux-firmware-amd
+linux-firmware-intel
 linux-firmware-network
+linux-firmware-nvidia
+linux-headers
 linux5.6
 linux5.6-headers
 linux5.8
+linux5.8-headers
 live555
 lsd
 lua52
