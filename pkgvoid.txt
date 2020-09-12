@@ -128,6 +128,7 @@ gawk
 gcr
 gdbm
 gdk-pixbuf
+gdk-pixbuf-xlib
 gettext-libs
 gir-freedesktop
 git
@@ -135,6 +136,7 @@ glib
 glib-networking
 glibmm
 glslang
+glu
 gmp
 gnome-themes-extra
 gnupg2
@@ -288,6 +290,7 @@ libgbm
 libgcc
 libgcrypt
 libgirepository
+libglade
 libglapi
 libglvnd
 libgomp
@@ -662,12 +665,15 @@ xkbcomp
 xkeyboard-config
 xkill
 xlockmore
+xmlcatmgr
 xorg-minimal
 xorg-server
 xprop
 xrandr
 xrdb
+xscreensaver
 xset
+xss-lock
 xterm
 xtools
 xvidcore
@@ -678,3 +684,4 @@ yajl
 zd1211-firmware
 zenity
 zlib
+zstd
